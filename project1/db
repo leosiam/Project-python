@@ -1,0 +1,38 @@
+import sqlite3
+
+# เชื่อมต่อกับฐานข้อมูล (จะสร้างฐานข้อมูลใหม่หากยังไม่มี)
+conn = sqlite3.connect('expenses_income.db')
+cursor = conn.cursor()
+
+# สร้างตาราง transactions
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS transactions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    type TEXT NOT NULL,
+    amount REAL NOT NULL,
+    description TEXT,
+    date TEXT NOT NULL
+)
+''')
+
+# สร้างตาราง categories (Optional)
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS categories (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL
+)
+''')
+
+# สร้างตาราง transaction_categories (Optional)
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS transaction_categories (
+    transaction_id INTEGER,
+    category_id INTEGER,
+    FOREIGN KEY (transaction_id) REFERENCES transactions(id),
+    FOREIGN KEY (category_id) REFERENCES categories(id),
+    PRIMARY KEY (transaction_id, category_id)
+)
+''')
+
+conn.commit()
+conn.close()
