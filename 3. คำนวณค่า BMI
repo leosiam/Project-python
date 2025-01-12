@@ -1,0 +1,18 @@
+def calculate_bmi():
+    print("โปรแกรมคำนวณค่า BMI")
+    weight = float(input("กรอกน้ำหนัก (kg): "))
+    height = float(input("กรอกส่วนสูง (m): "))
+    bmi = weight / (height ** 2)
+    print(f"BMI ของคุณคือ: {bmi:.2f}")
+
+    if bmi < 18.5:
+        print("คุณอยู่ในเกณฑ์น้ำหนักน้อย")
+    elif 18.5 <= bmi < 24.9:
+        print("คุณอยู่ในเกณฑ์น้ำหนักปกติ")
+    elif 25 <= bmi < 29.9:
+        print("คุณอยู่ในเกณฑ์น้ำหนักเกิน")
+    else:
+        print("คุณอยู่ในเกณฑ์อ้วน")
+    print("โปรดดูแลสุขภาพด้วยการออกกำลังกายและรับประทานอาหารที่เหมาะสม")
+
+calculate_bmi()
