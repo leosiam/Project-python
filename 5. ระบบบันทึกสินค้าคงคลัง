@@ -1,0 +1,39 @@
+def inventory_management():
+    inventory = {}
+    while True:
+        print("\nระบบจัดการสินค้าคงคลัง")
+        print("1. เพิ่มสินค้า")
+        print("2. ลบสินค้า")
+        print("3. แสดงสินค้า")
+        print("4. ออกจากโปรแกรม")
+        choice = input("เลือกเมนู: ")
+
+        if choice == "1":
+            item = input("ชื่อสินค้า: ")
+            quantity = int(input(f"จำนวนของ {item}: "))
+            if item in inventory:
+                inventory[item] += quantity
+            else:
+                inventory[item] = quantity
+            print(f"เพิ่ม {item} จำนวน {quantity} ชิ้นเรียบร้อยแล้ว")
+        elif choice == "2":
+            item = input("ชื่อสินค้าที่ต้องการลบ: ")
+            if item in inventory:
+                del inventory[item]
+                print(f"ลบ {item} เรียบร้อยแล้ว")
+            else:
+                print(f"{item} ไม่มีในคลังสินค้า")
+        elif choice == "3":
+            print("\nรายการสินค้าในคลัง:")
+            if inventory:
+                for item, quantity in inventory.items():
+                    print(f"{item}: {quantity}")
+            else:
+                print("คลังว่างเปล่า")
+        elif choice == "4":
+            print("ขอบคุณที่ใช้ระบบจัดการสินค้าคงคลัง")
+            break
+        else:
+            print("คำสั่งไม่ถูกต้อง")
+
+inventory_management()
