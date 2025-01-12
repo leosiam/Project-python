@@ -1,0 +1,29 @@
+def file_management():
+    while True:
+        print("\nระบบจัดการไฟล์")
+        print("1. บันทึกข้อมูลลงไฟล์")
+        print("2. อ่านข้อมูลจากไฟล์")
+        print("3. ออกจากโปรแกรม")
+        choice = input("เลือกเมนู (1-3): ")
+
+        if choice == "1":
+            filename = input("กรอกชื่อไฟล์ (เช่น data.txt): ")
+            content = input("กรอกข้อมูลที่ต้องการบันทึก: ")
+            with open(filename, "w") as file:
+                file.write(content)
+            print(f"บันทึกข้อมูลลงในไฟล์ '{filename}' เรียบร้อยแล้ว")
+        elif choice == "2":
+            filename = input("กรอกชื่อไฟล์ที่ต้องการอ่าน: ")
+            try:
+                with open(filename, "r") as file:
+                    print("\nข้อมูลในไฟล์:")
+                    print(file.read())
+            except FileNotFoundError:
+                print("ไม่พบไฟล์ดังกล่าว")
+        elif choice == "3":
+            print("ขอบคุณที่ใช้ระบบจัดการไฟล์!")
+            break
+        else:
+            print("กรุณาเลือกเมนูที่ถูกต้อง")
+
+file_management()
