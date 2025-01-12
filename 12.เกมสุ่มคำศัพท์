@@ -1,0 +1,21 @@
+import random
+
+def word_typing_game():
+    words = ["python", "programming", "developer", "function", "variable"]
+    print("เกมสุ่มคำศัพท์: พิมพ์คำที่สุ่มมาให้ถูกต้อง")
+
+    while True:
+        word = random.choice(words)
+        print(f"คำศัพท์: {word}")
+        typed_word = input("พิมพ์คำ: ")
+        if typed_word.lower() == word:
+            print("ถูกต้อง!")
+        else:
+            print(f"ผิด! คำที่ถูกต้องคือ {word}")
+
+        play_again = input("ต้องการเล่นอีกหรือไม่? (y/n): ").lower()
+        if play_again != "y":
+            print("ขอบคุณที่เล่นเกมสุ่มคำศัพท์!")
+            break
+
+word_typing_game()
