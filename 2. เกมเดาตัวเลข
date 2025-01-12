@@ -1,0 +1,21 @@
+import random
+
+def guess_number():
+    answer = random.randint(1, 100)
+    attempts = 0
+    print("เกมทายตัวเลข (1-100)")
+
+    while True:
+        guess = int(input("กรอกตัวเลขที่คุณเดา: "))
+        attempts += 1
+        if guess == answer:
+            print(f"คุณทายถูกต้องใน {attempts} ครั้ง!")
+            break
+        elif guess < answer:
+            print("มากกว่านี้")
+        else:
+            print("น้อยกว่านี้")
+
+    print("จบเกม ขอบคุณที่เล่นเกมทายตัวเลข!")
+
+guess_number()
