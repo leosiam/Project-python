@@ -1,0 +1,23 @@
+import random
+
+def random_prize():
+    prizes = {
+        "ทอง": ["รถยนต์", "โทรศัพท์", "โน๊ตบุ๊ค"],
+        "เงิน": ["นาฬิกา", "กระเป๋า", "หูฟัง"],
+        "ทั่วไป": ["ขนม", "น้ำดื่ม", "สมุดโน้ต"]
+    }
+
+    print("โปรแกรมสุ่มรางวัล")
+    while True:
+        print("\nระดับรางวัลที่มี: ทอง, เงิน, ทั่วไป")
+        choice = input("เลือกระดับรางวัล (พิมพ์ 'exit' เพื่อออก): ").strip()
+        if choice.lower() == "exit":
+            print("ขอบคุณที่ใช้โปรแกรมสุ่มรางวัล")
+            break
+        elif choice in prizes:
+            prize = random.choice(prizes[choice])
+            print(f"คุณได้รับรางวัล: {prize}")
+        else:
+            print("เลือกระดับรางวัลไม่ถูกต้อง กรุณาลองใหม่")
+
+random_prize()
