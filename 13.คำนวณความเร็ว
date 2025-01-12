@@ -1,0 +1,13 @@
+def calculate_speed():
+    print("โปรแกรมคำนวณความเร็ว")
+    distance = float(input("กรอกระยะทาง (กิโลเมตร): "))
+    time = float(input("กรอกเวลา (ชั่วโมง): "))
+
+    if time <= 0:
+        print("เวลาไม่สามารถเป็นศูนย์หรือค่าลบได้")
+        return
+
+    speed = distance / time
+    print(f"ความเร็ว: {speed:.2f} กม./ชม.")
+
+calculate_speed()
