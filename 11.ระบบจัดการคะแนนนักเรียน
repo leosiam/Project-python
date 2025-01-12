@@ -1,0 +1,36 @@
+def manage_student_scores():
+    students = {}
+    while True:
+        print("\nระบบจัดการคะแนนนักเรียน")
+        print("1. เพิ่มคะแนนนักเรียน")
+        print("2. แสดงคะแนนนักเรียนทั้งหมด")
+        print("3. ลบคะแนนนักเรียน")
+        print("4. ออกจากโปรแกรม")
+        choice = input("เลือกเมนู (1-4): ")
+
+        if choice == "1":
+            name = input("กรอกชื่อนักเรียน: ")
+            score = float(input(f"กรอกคะแนนของ {name}: "))
+            students[name] = score
+            print(f"เพิ่มคะแนน {name} เรียบร้อยแล้ว!")
+        elif choice == "2":
+            if not students:
+                print("ยังไม่มีข้อมูลคะแนนนักเรียน")
+            else:
+                print("\nรายชื่อนักเรียนและคะแนน:")
+                for name, score in students.items():
+                    print(f"{name}: {score:.2f}")
+        elif choice == "3":
+            name = input("กรอกชื่อนักเรียนที่ต้องการลบ: ")
+            if name in students:
+                del students[name]
+                print(f"ลบข้อมูลของ {name} เรียบร้อยแล้ว!")
+            else:
+                print(f"ไม่พบข้อมูลของ {name}")
+        elif choice == "4":
+            print("ขอบคุณที่ใช้โปรแกรมจัดการคะแนนนักเรียน!")
+            break
+        else:
+            print("กรุณาเลือกเมนูที่ถูกต้อง")
+
+manage_student_scores()
