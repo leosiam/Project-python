@@ -1,0 +1,31 @@
+def calculator_menu():
+    while True:
+        print("\nเมนูเครื่องคิดเลข")
+        print("1. บวก")
+        print("2. ลบ")
+        print("3. คูณ")
+        print("4. หาร")
+        print("5. ออกจากโปรแกรม")
+        choice = input("เลือกเมนู (1-5): ")
+        
+        if choice == "5":
+            print("ขอบคุณที่ใช้โปรแกรมเครื่องคิดเลข")
+            break
+        elif choice in ["1", "2", "3", "4"]:
+            a = float(input("กรอกตัวเลขที่ 1: "))
+            b = float(input("กรอกตัวเลขที่ 2: "))
+            if choice == "1":
+                print(f"ผลลัพธ์: {a + b}")
+            elif choice == "2":
+                print(f"ผลลัพธ์: {a - b}")
+            elif choice == "3":
+                print(f"ผลลัพธ์: {a * b}")
+            elif choice == "4":
+                if b != 0:
+                    print(f"ผลลัพธ์: {a / b}")
+                else:
+                    print("ไม่สามารถหารด้วยศูนย์ได้")
+        else:
+            print("กรุณาเลือกเมนูที่ถูกต้อง")
+
+calculator_menu()
