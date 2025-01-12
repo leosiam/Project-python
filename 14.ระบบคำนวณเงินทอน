@@ -1,0 +1,20 @@
+def calculate_change():
+    print("โปรแกรมคำนวณเงินทอน")
+    total_cost = float(input("กรอกยอดเงินทั้งหมด (บาท): "))
+    amount_paid = float(input("กรอกจำนวนเงินที่จ่าย (บาท): "))
+
+    if amount_paid < total_cost:
+        print("เงินที่จ่ายน้อยกว่ายอดเงินรวม")
+        return
+
+    change = amount_paid - total_cost
+    print(f"เงินทอนทั้งหมด: {change:.2f} บาท")
+
+    denominations = [1000, 500, 100, 50, 20, 10, 5, 1, 0.5, 0.25]
+    for denom in denominations:
+        count = int(change // denom)
+        change -= count * denom
+        if count > 0:
+            print(f"{denom:.2f} บาท: {count} ใบ/เหรียญ")
+
+calculate_change()
