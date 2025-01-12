@@ -1,0 +1,29 @@
+import random
+
+def rock_paper_scissors():
+    choices = ["rock", "paper", "scissors"]
+    print("เกมเป่ายิ้งฉุบ")
+    while True:
+        player_choice = input("กรอกตัวเลือก (rock, paper, scissors): ").lower()
+        if player_choice not in choices:
+            print("ตัวเลือกไม่ถูกต้อง")
+            continue
+
+        computer_choice = random.choice(choices)
+        print(f"คอมพิวเตอร์เลือก: {computer_choice}")
+
+        if player_choice == computer_choice:
+            print("เสมอ!")
+        elif (player_choice == "rock" and computer_choice == "scissors") or \
+             (player_choice == "paper" and computer_choice == "rock") or \
+             (player_choice == "scissors" and computer_choice == "paper"):
+            print("คุณชนะ!")
+        else:
+            print("คุณแพ้!")
+        
+        play_again = input("เล่นอีกหรือไม่? (y/n): ").lower()
+        if play_again != "y":
+            print("ขอบคุณที่เล่นเกมเป่ายิ้งฉุบ!")
+            break
+
+rock_paper_scissors()
