@@ -1,0 +1,85 @@
+import tkinter as tk
+import time
+import sqlite3
+from datetime import datetime
+
+class Stopwatch:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("นาฬิกาจับเวลา")
+        self.root.geometry("300x180")
+        
+        self.running = False
+        self.start_time = 0
+        self.elapsed_time = 0
+
+        # เชื่อมต่อ SQLite
+        self.conn = sqlite3.connect("stopwatch.db")
+        self.create_table()
+
+        # UI
+        self.time_label = tk.Label(root, text="00:00:00", font=("Arial", 40))
+        self.time_label.pack(pady=10)
+
+        self.start_button = tk.Button(root, text="Start", command=self.start, width=10)
+        self.start_button.pack(side="left", padx=5, pady=10)
+
+        self.stop_button = tk.Button(root, text="Stop", command=self.stop, width=10)
+        self.stop_button.pack(side="left", padx=5, pady=10)
+
+        self.reset_button = tk.Button(root, text="Reset", command=self.reset, width=10)
+        self.reset_button.pack(side="left", padx=5, pady=10)
+
+        self.status_label = tk.Label(root, text="", fg="green")
+        self.status_label.pack()
+
+        self.update()
+
+    def create_table(self):
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS stopwatch_log (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                timestamp TEXT,
+                duration TEXT
+            )
+        """)
+        self.conn.commit()
+
+    def log_time(self, duration):
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        cursor = self.conn.cursor()
+        cursor.execute("INSERT INTO stopwatch_log (timestamp, duration) VALUES (?, ?)", (timestamp, duration))
+        self.conn.commit()
+
+    def update(self):
+        if self.running:
+            self.elapsed_time = time.time() - self.start_time
+            time_str = time.strftime("%H:%M:%S", time.gmtime(self.elapsed_time))
+            self.time_label.config(text=time_str)
+        self.root.after(100, self.update)
+
+    def start(self):
+        if not self.running:
+            self.start_time = time.time() - self.elapsed_time
+            self.running = True
+            self.status_label.config(text="เริ่มจับเวลา", fg="blue")
+
+    def stop(self):
+        if self.running:
+            self.running = False
+            duration = time.strftime("%H:%M:%S", time.gmtime(self.elapsed_time))
+            self.log_time(duration)
+            self.status_label.config(text=f"หยุดแล้ว บันทึกเวลา {duration}", fg="green")
+
+    def reset(self):
+        self.running = False
+        self.elapsed_time = 0
+        self.time_label.config(text="00:00:00")
+        self.status_label.config(text="รีเซ็ตเวลาแล้ว", fg="gray")
+
+# เรียกใช้งาน
+if __name__ == "__main__":
+    root = tk.Tk()
+    stopwatch = Stopwatch(root)
+    root.mainloop()
