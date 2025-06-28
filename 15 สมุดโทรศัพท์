@@ -1,0 +1,67 @@
+import tkinter as tk
+from tkinter import messagebox, simpledialog
+import sqlite3
+
+# เชื่อมต่อฐานข้อมูล
+conn = sqlite3.connect("phonebook.db")
+cursor = conn.cursor()
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS contacts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nickname TEXT NOT NULL,
+        phone TEXT NOT NULL
+    )
+''')
+conn.commit()
+
+# โหลดข้อมูล
+def load_contacts():
+    listbox.delete(0, tk.END)
+    cursor.execute("SELECT id, nickname, phone FROM contacts")
+    for row in cursor.fetchall():
+        listbox.insert(tk.END, f"{row[0]}: {row[1]} - {row[2]}")
+
+# เพิ่มข้อมูล
+def add_contact():
+    nickname = simpledialog.askstring("ชื่อเล่น", "กรอกชื่อเล่น:")
+    phone = simpledialog.askstring("เบอร์โทร", "กรอกเบอร์โทร:")
+    if nickname and phone:
+        cursor.execute("INSERT INTO contacts (nickname, phone) VALUES (?, ?)", (nickname, phone))
+        conn.commit()
+        load_contacts()
+
+# ลบข้อมูล
+def delete_contact():
+    selected = listbox.get(tk.ACTIVE)
+    if selected:
+        contact_id = selected.split(":")[0]
+        cursor.execute("DELETE FROM contacts WHERE id = ?", (contact_id,))
+        conn.commit()
+        load_contacts()
+
+# แก้ไขข้อมูล
+def edit_contact():
+    selected = listbox.get(tk.ACTIVE)
+    if selected:
+        contact_id = selected.split(":")[0]
+        nickname = simpledialog.askstring("ชื่อใหม่", "ชื่อเล่นใหม่:")
+        phone = simpledialog.askstring("เบอร์ใหม่", "เบอร์โทรใหม่:")
+        if nickname and phone:
+            cursor.execute("UPDATE contacts SET nickname = ?, phone = ? WHERE id = ?", (nickname, phone, contact_id))
+            conn.commit()
+            load_contacts()
+
+# UI
+root = tk.Tk()
+root.title("สมุดโทรศัพท์")
+
+listbox = tk.Listbox(root, width=40)
+listbox.pack()
+
+tk.Button(root, text="เพิ่ม", command=add_contact).pack()
+tk.Button(root, text="แก้ไข", command=edit_contact).pack()
+tk.Button(root, text="ลบ", command=delete_contact).pack()
+tk.Button(root, text="รีเฟรช", command=load_contacts).pack()
+
+load_contacts()
+root.mainloop()
